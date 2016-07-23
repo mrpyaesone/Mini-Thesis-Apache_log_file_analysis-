@@ -1,6 +1,6 @@
 <?php
   session_start();
-  $valid = true;
+  $valid = isset($_SESSION['auth']);
 ?>
 <!DOCTYPE html>
 <!-- Mirrored from www.w3schools.com/css/tryit.asp?filename=trycss_navbar_horizontal_black_active by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 13 Mar 2016 11:04:36 GMT -->
@@ -51,7 +51,7 @@ body {
   padding: 15px;
 }
 
-/* #homeTab{
+#homeTab{
   color: #008080;
 }
 #activityTab{
@@ -65,7 +65,7 @@ body {
 }
 #logoutTab{
   color: white;
-} */
+}
 
 #homeP{
   display: block;
@@ -83,26 +83,6 @@ body {
   display: none;
 }
 
-section {
-  width: 100%;
-  padding: 50px;
-  background: #fff;
-  border-bottom: 1px solid #ccc;
-  height: 500px;
-  text-align: center;
-}
-
-a.active {
-  font-size: 20px;
-  border-bottom: 4px solid green;
-}
-
-nav ul li a:hover {
-  color: green;
-}
-
-section.active {}
-
 </style>
 <link rel="import" id="acticityL" href="Activity.html">
 </head>
@@ -116,11 +96,11 @@ section.active {}
   <li style="float:right;"><a href="About.html">About</a></li>
   <li style="float:right;"><a href="Logout.html">Logout</a></li>
 </ul> -->
-<nav>
+
 <ul class="bar">
-  <li id="homeTab" onclick="switchH()"><a id="#1" href="#Home.html" >Home</a></li>
-  <li id="activityTab" onclick="switchA()"><a id="#2" href="#Activity.html" target="activity" >Activity</a></li>
-  <li id="contactTab" onclick="switchC()"><a id="#3" href="#Contact.php" >Contact</a></li>
+  <li id="homeTab" onclick="switchH()">Home</li>
+  <li id="activityTab" onclick="switchA()"><a href="Activity.html" target="activity" >Activity</a></li>
+  <li id="contactTab" onclick="switchC()"><a href="Contact.php">Contact</a></li>
   <!-- <li id="contactTab" onclick="switchC()">Countries</li>
   <li id="contactTab" onclick="switchC()">Browser</li>
   <li id="contactTab" onclick="switchC()">OS</li>
@@ -129,14 +109,12 @@ section.active {}
   <li id="contactTab" onclick="switchC()">URL</li> -->
   <li id="aboutTab" style="float:right;" onclick="switchAbout()">About</li>
   <li id="logoutTab" style="float:right;" onclick="switchL()"><a href="Logout.php">Logout</a></li>
-</ul></nav>
-<div class="sections">
-  <section id="1"><h1>First</h1></section>
-  <section id="2"></section>
-  <section id="3"><h1>Third</h1></section>
-  <section id="4"><h1>Fourth</h1></section>
-  <section id="5"><h1>Fifth</h1></section> 
-</div>
+</ul>
+<div class="panel" id="homeP">Home</div>
+<div class="panel" id="activityP"></div>
+<div class="panel" id="contactP">Contact</div>
+<div class="panel" id="aboutP"></div>
+<div class="panel" id="logoutP">Logout</div>
 <!-- <div class="section">
   <section id></section>
 </div> -->
@@ -147,10 +125,10 @@ section.active {}
     return document.getElementById(obj);
   }
 
-  /*function switchH(){
-    get("#1").style.color = "#008080";
-    get("#2").style.color = "white";
-    get("#3").style.color = "white";
+  function switchH(){
+    get("homeTab").style.color = "#008080";
+    get("activityTab").style.color = "white";
+    get("contactTab").style.color = "white";
     get("aboutTab").style.color = "white";
     get("logoutTab").style.color = "white";
     get("homeP").style.display = "block";
@@ -161,9 +139,9 @@ section.active {}
   }
 
   function switchA(){
-    get("#1").style.color = "white";
-    get("#2").style.color = "#008080";
-    get("#3").style.color = "white";
+    get("homeTab").style.color = "white";
+    get("activityTab").style.color = "#008080";
+    get("contactTab").style.color = "white";
     get("aboutTab").style.color = "white";
     get("logoutTab").style.color = "white";
     get("homeP").style.display = "none";
@@ -174,9 +152,9 @@ section.active {}
     }
 
   function switchC(){
-    get("#1").style.color = "white";
-    get("#2").style.color = "white";
-    get("#3").style.color = "#008080";
+    get("homeTab").style.color = "white";
+    get("activityTab").style.color = "white";
+    get("contactTab").style.color = "#008080";
     get("aboutTab").style.color = "white";
     get("logoutTab").style.color = "white";
     get("homeP").style.display = "none";
@@ -184,7 +162,7 @@ section.active {}
     get("contactP").style.display = "block";
     get("aboutP").style.display = "none";
     get("logoutP").style.display = "none";
-  }*/
+  }
 
   function switchAbout(){
     get("homeTab").style.color = "white";
@@ -224,35 +202,11 @@ section.active {}
 
   var getImport  = document.querySelector('#acticityL');
   var getContent = getImport.import.querySelector('#content');
-  document.getElementById("2").appendChild(getContent);
+  document.body.appendChild(document.importNode(getContent, true));
   
 </script>
 
 <!-- <iframe src="Activity.html" width="100%" height="100%" name="activity"></iframe> -->
-
-<script class="cssdeck" src="jquery-3.1.0.min.js"></script>
-    
-        <script>
-      var sections = $('section'), nav = $('nav'), nav_height = nav.outerHeight();
-$(window).on('scroll', function () {
-    var cur_pos = $(this).scrollTop();
-    sections.each(function () {
-        var top = $(this).offset().top - nav_height, bottom = top + $(this).outerHeight();
-        if (cur_pos >= top && cur_pos <= bottom) {
-            nav.find('a').removeClass('active');
-            sections.removeClass('active');
-            $(this).addClass('active');
-            nav.find('a[id="#' + $(this).attr('id') + '"]').addClass('active');
-        }
-    });
-});
-nav.find('a').on('click', function () {
-    var $el = $(this), id = $el.attr('id');
-    $('html, body').animate({ scrollTop: $(id).offset().top - nav_height }, 500);
-    return false;
-});
-      //# sourceURL=pen.js
-    </script>
 </body>
 <?php 
     }else {
