@@ -84,11 +84,11 @@ body {
 }
 
 section {
-  width: 100%;
-  padding: 50px;
+  width: 25%;
+  padding: 0px;
   background: #fff;
   border-bottom: 1px solid #ccc;
-  height: 500px;
+  height: 700px;
   text-align: center;
 }
 
@@ -104,7 +104,7 @@ nav ul li a:hover {
 section.active {}
 
 </style>
-<link rel="import" id="acticityL" href="Activity.html">
+<link rel="import" id="acticityL" href="http://localhost/PHP/Thesis/Bash/HTML%20Templates%20using%20bash/Activity.html">
 </head>
 <?php if($valid){ ?>
 <body>
@@ -233,12 +233,12 @@ section.active {}
 <script class="cssdeck" src="jquery-3.1.0.min.js"></script>
     
         <script>
-      var sections = $('section'), nav = $('nav'), nav_height = nav.outerHeight();
-$(window).on('scroll', function () {
-    var cur_pos = $(this).scrollTop();
-    sections.each(function () {
-        var top = $(this).offset().top - nav_height, bottom = top + $(this).outerHeight();
-        if (cur_pos >= top && cur_pos <= bottom) {
+          var sections = $('section'), nav = $('nav'), nav_height = nav.outerHeight() + 80;
+          $(window).on('scroll', function () {
+          var cur_pos = $(this).scrollTop();
+          sections.each(function () {
+            var top = $(this).offset().top - nav_height, bottom = top + $(this).outerHeight();
+           if (cur_pos >= top && cur_pos <= bottom) {
             nav.find('a').removeClass('active');
             sections.removeClass('active');
             $(this).addClass('active');
